@@ -7,6 +7,7 @@ import {
   getUserExerciseById,
   createExercise,
   deleteExercise,
+  editExerciseById,
 } from '../services';
 
 const router = express.Router({ mergeParams: true });
@@ -17,7 +18,7 @@ router.get(
     const { user_id } = req.params;
     const exercises = await getUserExercises(user_id);
 
-    res.send(exercises);
+    res.status(200).send(exercises);
   })
 );
 
@@ -30,7 +31,7 @@ router.post(
     let userExists = await getUserById(user_id);
 
     if (!userExists) {
-      return res.status(400).json({
+      return res.status(404).json({
         msg: 'user not found',
       });
     }
@@ -42,7 +43,7 @@ router.post(
       duration
     );
 
-    res.json(newExercise);
+    res.status(201).json(newExercise);
   })
 );
 
@@ -53,14 +54,38 @@ router.delete(
     const exerciseExists = await getUserExerciseById(user_id, exercise_id);
 
     if (!exerciseExists) {
-      return res.status(400).json({
+      return res.status(404).json({
         msg: 'exercise not found',
       });
     }
 
     const deletedExercise = await deleteExercise(user_id, exercise_id);
 
-    res.json(deletedExercise);
+    res.status(200).json(deletedExercise);
+  })
+);
+
+router.put(
+  '/:exercise_id',
+  interceptor(async (req, res) => {
+    const { exercise_id, user_id } = req.params;
+    const { description, date, duration } = req.body;
+    const exerciseExists = await getUserExerciseById(user_id, exercise_id);
+
+    if (!exerciseExists) {
+      return res.status(404).json({
+        msg: 'exercise not found',
+      });
+    }
+
+    const updatedExercise = await editExerciseById(
+      exercise_id,
+      description,
+      date,
+      duration
+    );
+
+    res.status(200).json(updatedExercise);
   })
 );
 

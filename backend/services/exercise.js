@@ -40,9 +40,22 @@ const deleteExercise = async (user_id, exercise_id) =>
     },
   });
 
+const editExerciseById = async (exercise_id, description, date, duration) =>
+  await exercise.update({
+    where: {
+      id: parseInt(exercise_id),
+    },
+    data:{
+      description,
+      date,
+      duration
+    }
+  });
+
 export {
   getUserExercises,
   getUserExerciseById,
+  editExerciseById,
   createExercise,
   deleteExercise,
 };

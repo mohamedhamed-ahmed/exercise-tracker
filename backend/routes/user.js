@@ -10,7 +10,7 @@ router.get(
   interceptor(async (req, res) => {
     const result = await getUsers();
 
-    res.json(result);
+    res.status(200).json(result);
   })
 );
 
@@ -20,7 +20,7 @@ router.get(
     const { id } = req.params;
     const result = await getUserById(id);
 
-    res.send(result);
+    res.status(200).send(result);
   })
 );
 
@@ -41,7 +41,7 @@ router.post(
 
     let newUser = await addUser(name);
 
-    res.json(newUser);
+    res.status(201).json(newUser);
   })
 );
 
