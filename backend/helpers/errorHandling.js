@@ -1,9 +1,9 @@
-const use = (fn) => (req, res, next) =>
+const interceptor = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 
-const errorHandlingMidleware = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   console.log(err);
   res.status(500).send({ message: 'Something went wrong!' });
 };
 
-export { use, errorHandlingMidleware };
+export { interceptor, errorHandler };

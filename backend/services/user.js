@@ -2,14 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 const { user } = new PrismaClient();
 
-const getUsers = async () =>
-  await user.findMany({
-    select: {
-      id: true,
-      name: true,
-      exercises: false,
-    },
-  });
+const getUsers = async () => await user.findMany();
 
 const getUserById = async (id) =>
   await getSpecificUser({
@@ -24,10 +17,6 @@ const getUserByName = async (name) =>
 const getSpecificUser = async (condition) =>
   await user.findUnique({
     where: condition,
-    select: {
-      id: true,
-      name: true,
-    },
   });
 
 const addUser = async (name) =>
