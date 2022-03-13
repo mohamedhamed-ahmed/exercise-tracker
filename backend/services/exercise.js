@@ -15,7 +15,7 @@ const getAllExercises = async () =>
 const getUserExercises = async (userId) =>
   await exercise.findMany({
     where: {
-      user_id: parseInt(userId),
+      userId: parseInt(userId),
     },
     select: {
       id: true,
@@ -28,7 +28,7 @@ const getUserExercises = async (userId) =>
 const createExercise = async (userId, description, date, duration) =>
   await exercise.create({
     data: {
-      user_id: parseInt(userId),
+      userId: parseInt(userId),
       description,
       date: new Date(date),
       duration,
@@ -39,7 +39,7 @@ const getUserExerciseById = async (userId, exerciseId) =>
   await exercise.findFirst({
     where: {
       id: parseInt(exerciseId),
-      user_id: parseInt(userId),
+      userId: parseInt(userId),
     },
   });
 
@@ -47,7 +47,7 @@ const deleteExercise = async (userId, exerciseId) =>
   await exercise.deleteMany({
     where: {
       id: parseInt(exerciseId),
-      user_id: parseInt(userId),
+      userId: parseInt(userId),
     },
   });
 

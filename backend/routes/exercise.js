@@ -17,8 +17,8 @@ router.get(
   '/',
   interceptor(async (req, res) => {
     const { userId } = req.params;
-    
-    const exercises = userId ? await getUserExercises(userId) :await getAllExercises(userId);
+
+    const exercises = userId ? await getUserExercises(userId) : await getAllExercises(userId);
 
     res.status(200).send(exercises);
   })
@@ -29,7 +29,8 @@ router.post(
   exerciseValidationRules(),
   validate,
   interceptor(async (req, res) => {
-    const { userId, description, date, duration } = req.body;
+    const { userId } = req.params;
+    const { description, date, duration } = req.body;
     let userExists = await getUserById(userId);
 
     if (!userExists) {
@@ -38,12 +39,7 @@ router.post(
       });
     }
 
-    let newExercise = await createExercise(
-      userId,
-      description,
-      date,
-      duration
-    );
+    let newExercise = await createExercise(userId, description, date, duration);
 
     res.status(201).json(newExercise);
   })
@@ -80,12 +76,7 @@ router.put(
       });
     }
 
-    const updatedExercise = await editExerciseById(
-      exerciseId,
-      description,
-      date,
-      duration
-    );
+    const updatedExercise = await editExerciseById(exerciseId, description, date, duration);
 
     res.status(200).json(updatedExercise);
   })

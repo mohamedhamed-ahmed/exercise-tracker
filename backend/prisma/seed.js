@@ -16,13 +16,9 @@ async function main() {
     });
 
     if (user && user.id) {
-      await prisma.exercise.upsert({
-        where: {
-          description: `Exercise for user ${userId}`,
-        },
-        update: {},
-        create: {
-          user_id: user.id,
+      await prisma.exercise.create({
+        data: {
+          userId: user.id,
           description: `Exercise for user ${userId}`,
           duration: 2,
           date: `2022-0${userId}-0${userId}T0${userId}:00:00Z`,

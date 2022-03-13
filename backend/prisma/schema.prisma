@@ -17,8 +17,8 @@ model User {
 model Exercise {
   @@map(name: "exercise")
   id Int @default (autoincrement()) @id
-  user User @relation(fields: [user_id], references: [id])
-  user_id Int 
+  user User @relation(fields: [userId], references: [id])
+  userId Int 
   description String @db.VarChar(255)
   duration Int
   date DateTime
