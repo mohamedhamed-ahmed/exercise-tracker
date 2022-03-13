@@ -13,9 +13,9 @@ describe('Exercise Endpoints', () => {
         const res2 = await request(app).post('/api/users').send({
             name: 'test2',
         });
+        await new Promise((r) => setTimeout(r, 1000))
         users.push(res1.body, res2.body);
     });
-    beforeEach(async () => await new Promise((r) => setTimeout(r, 300)));
     afterEach(async () => await prisma.exercise.deleteMany());
     afterAll(async () => await prisma.$disconnect());
 
@@ -47,7 +47,6 @@ describe('Exercise Endpoints', () => {
                 user_id:users[0].id,
                 duration: 2
             });
-            console.log(JSON.stringify(res))
             expect(res.statusCode).toEqual(422);
             expect(res.body).not.toHaveProperty('id');
         });

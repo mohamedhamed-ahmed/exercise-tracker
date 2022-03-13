@@ -2,6 +2,7 @@ import express from 'express';
 import { interceptor } from '../helpers';
 import { exerciseValidationRules, validate } from '../validations';
 import {
+  getAllExercises,
   getUserById,
   getUserExercises,
   getUserExerciseById,
@@ -16,7 +17,8 @@ router.get(
   '/',
   interceptor(async (req, res) => {
     const { user_id } = req.params;
-    const exercises = await getUserExercises(user_id);
+    
+    const exercises = user_id ? await getUserExercises(user_id) :await getAllExercises(user_id);
 
     res.status(200).send(exercises);
   })

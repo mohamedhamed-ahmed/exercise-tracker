@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { logger } from './logger';
 
 axios.interceptors.response.use(undefined, (error) => {
   const expectedError =
@@ -8,7 +7,7 @@ axios.interceptors.response.use(undefined, (error) => {
     error.response.status < 500;
 
   if (!expectedError) {
-    logger.error(error);
+    console.log(error);
   }
 
   return Promise.reject(error);

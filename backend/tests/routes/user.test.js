@@ -65,8 +65,6 @@ describe('User Endpoints', () => {
     it('should return a specific users', async () => {
       const res = await request(app).get(`/api/users/${users[0].id}`).send();
 
-      console.log(JSON.stringify(res));
-
       expect(res.statusCode).toEqual(200);
       expect(res.body['name']).toEqual(users[0].name);
     });

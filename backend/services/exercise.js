@@ -1,6 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 const { exercise } = new PrismaClient();
 
+const getAllExercises = async (user_id) =>
+  await exercise.findMany({
+    select: {
+      id: true,
+      description: true,
+      duration: true,
+      date: true,
+      user: true,
+    }
+  });
+
 const getUserExercises = async (user_id) =>
   await exercise.findMany({
     where: {
@@ -17,7 +28,7 @@ const getUserExercises = async (user_id) =>
 const createExercise = async (user_id, description, date, duration) =>
   await exercise.create({
     data: {
-        user_id:parseInt(user_id),
+      user_id: parseInt(user_id),
       description,
       date: new Date(date),
       duration,
@@ -45,14 +56,15 @@ const editExerciseById = async (exercise_id, description, date, duration) =>
     where: {
       id: parseInt(exercise_id),
     },
-    data:{
+    data: {
       description,
       date,
-      duration
-    }
+      duration,
+    },
   });
 
 export {
+  getAllExercises,
   getUserExercises,
   getUserExerciseById,
   editExerciseById,

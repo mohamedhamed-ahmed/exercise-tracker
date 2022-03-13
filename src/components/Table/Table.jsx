@@ -1,19 +1,24 @@
 import React from 'react';
+import { TableContainer, DataGridWrapper } from './Table.styles';
 
-import { DataGrid } from '@mui/x-data-grid';
-
-
-
-const Table = ({ rows , columns, showCheckboxSelection ,  editRowsModel}) => {
-  return (<DataGrid
-      rows={rows}
-      columns={columns}
-      pageSize={5}
-      rowsPerPageOptions={[5]}
-      editRowsMode={!!editRowsModel}
-      checkboxSelection={!!showCheckboxSelection}
-      disableSelectionOnClick
-  />);
+const Table = ({
+  rows,
+  columns,
+  rowsPerPage = 10,
+  rowsPerPagOptions = [10],
+}) => {
+  return (
+    <TableContainer>
+      <DataGridWrapper
+        rows={rows}
+        columns={columns}
+    
+        disableSelectionOnClick
+        disableColumnSelector
+        disableColumnMenu
+      />
+    </TableContainer>
+  );
 };
 
 export default Table;
