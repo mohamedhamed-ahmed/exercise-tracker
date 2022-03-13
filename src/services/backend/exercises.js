@@ -1,5 +1,11 @@
 import { httpService } from '../utils';
 
+const getExerciseById = async (exerciseId, userId) => {
+  const url = `http://localhost:5222/api/users/${userId}/exercises/${exerciseId}`;
+  const { data } = await httpService.get(url);
+  return data;
+};
+
 const getExercises = async () => {
   const url = `http://localhost:5222/api/exercises`;
   const { data } = await httpService.get(url);
@@ -20,14 +26,14 @@ const addExercise = async ({ userId, description, duration, date }) => {
 
 const editExercise = async ({
   userId,
-  exerciseId,
+  id,
   description,
   duration,
   date,
 }) => {
-  const url = `http://localhost:5222/api/users/${userId}/exercises/${exerciseId}`;
+  const url = `http://localhost:5222/api/users/${userId}/exercises/${id}`;
   const { data } = await httpService.put(url, { description, duration, date });
   return data;
 };
 
-export { getExercises, deleteExercise, addExercise, editExercise };
+export { getExercises, deleteExercise, addExercise, editExercise, getExerciseById };

@@ -14,8 +14,8 @@ const Select = ({ label, selectedId, items, handleChange }) => {
         label={label}
         onChange={({target})=> { handleChange(target.value);}}
       >
-        {items.map((item, index) => 
-          <MenuItem key={index} value={item.id}>
+        {items.map((item) => 
+          <MenuItem key={item.id} value={item.id}>
             {item.name}
           </MenuItem>
         )}

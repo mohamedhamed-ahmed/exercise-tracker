@@ -9,7 +9,7 @@ const getAllExercises = async () =>
       duration: true,
       date: true,
       user: true,
-    }
+    },
   });
 
 const getUserExercises = async (userId) =>
@@ -41,6 +41,13 @@ const getUserExerciseById = async (userId, exerciseId) =>
       id: parseInt(exerciseId),
       userId: parseInt(userId),
     },
+    select: {
+      id: true,
+      description: true,
+      duration: true,
+      date: true,
+      user: true,
+    },
   });
 
 const deleteExercise = async (userId, exerciseId) =>
@@ -58,7 +65,7 @@ const editExerciseById = async (exerciseId, description, date, duration) =>
     },
     data: {
       description,
-      date,
+      date: new Date(date),
       duration,
     },
   });

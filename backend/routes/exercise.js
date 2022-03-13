@@ -24,6 +24,23 @@ router.get(
   })
 );
 
+router.get(
+  '/:exerciseId',
+  interceptor(async (req, res) => {
+    const { userId, exerciseId } = req.params;
+
+    const exercise = await getUserExerciseById(userId, exerciseId);
+
+    if (!exercise) {
+      return res.status(404).json({
+        msg: 'exercise not found',
+      });
+    }
+
+    res.status(200).send(exercise);
+  })
+);
+
 router.post(
   '/',
   exerciseValidationRules(),

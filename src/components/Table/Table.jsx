@@ -9,7 +9,6 @@ const Table = ({ rows, columns }) => {
         columns={columns}
         disableSelectionOnClick
         disableColumnSelector
-        disableColumnMenu
       />
     </TableContainer>
   );
