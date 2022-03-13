@@ -16,9 +16,9 @@ const router = express.Router({ mergeParams: true });
 router.get(
   '/',
   interceptor(async (req, res) => {
-    const { user_id } = req.params;
+    const { userId } = req.params;
     
-    const exercises = user_id ? await getUserExercises(user_id) :await getAllExercises(user_id);
+    const exercises = userId ? await getUserExercises(userId) :await getAllExercises(userId);
 
     res.status(200).send(exercises);
   })
@@ -29,8 +29,8 @@ router.post(
   exerciseValidationRules(),
   validate,
   interceptor(async (req, res) => {
-    const { user_id, description, date, duration } = req.body;
-    let userExists = await getUserById(user_id);
+    const { userId, description, date, duration } = req.body;
+    let userExists = await getUserById(userId);
 
     if (!userExists) {
       return res.status(404).json({
@@ -39,7 +39,7 @@ router.post(
     }
 
     let newExercise = await createExercise(
-      user_id,
+      userId,
       description,
       date,
       duration
@@ -50,10 +50,10 @@ router.post(
 );
 
 router.delete(
-  '/:exercise_id',
+  '/:exerciseId',
   interceptor(async (req, res) => {
-    const { exercise_id, user_id } = req.params;
-    const exerciseExists = await getUserExerciseById(user_id, exercise_id);
+    const { exerciseId, userId } = req.params;
+    const exerciseExists = await getUserExerciseById(userId, exerciseId);
 
     if (!exerciseExists) {
       return res.status(404).json({
@@ -61,18 +61,18 @@ router.delete(
       });
     }
 
-    const deletedExercise = await deleteExercise(user_id, exercise_id);
+    const deletedExercise = await deleteExercise(userId, exerciseId);
 
     res.status(200).json(deletedExercise);
   })
 );
 
 router.put(
-  '/:exercise_id',
+  '/:exerciseId',
   interceptor(async (req, res) => {
-    const { exercise_id, user_id } = req.params;
+    const { exerciseId, userId } = req.params;
     const { description, date, duration } = req.body;
-    const exerciseExists = await getUserExerciseById(user_id, exercise_id);
+    const exerciseExists = await getUserExerciseById(userId, exerciseId);
 
     if (!exerciseExists) {
       return res.status(404).json({
@@ -81,7 +81,7 @@ router.put(
     }
 
     const updatedExercise = await editExerciseById(
-      exercise_id,
+      exerciseId,
       description,
       date,
       duration

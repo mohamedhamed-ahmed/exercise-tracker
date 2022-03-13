@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const { exercise } = new PrismaClient();
 
-const getAllExercises = async (user_id) =>
+const getAllExercises = async () =>
   await exercise.findMany({
     select: {
       id: true,
@@ -12,10 +12,10 @@ const getAllExercises = async (user_id) =>
     }
   });
 
-const getUserExercises = async (user_id) =>
+const getUserExercises = async (userId) =>
   await exercise.findMany({
     where: {
-      user_id: parseInt(user_id),
+      user_id: parseInt(userId),
     },
     select: {
       id: true,
@@ -25,36 +25,36 @@ const getUserExercises = async (user_id) =>
     },
   });
 
-const createExercise = async (user_id, description, date, duration) =>
+const createExercise = async (userId, description, date, duration) =>
   await exercise.create({
     data: {
-      user_id: parseInt(user_id),
+      user_id: parseInt(userId),
       description,
       date: new Date(date),
       duration,
     },
   });
 
-const getUserExerciseById = async (user_id, exercise_id) =>
+const getUserExerciseById = async (userId, exerciseId) =>
   await exercise.findFirst({
     where: {
-      id: parseInt(exercise_id),
-      user_id: parseInt(user_id),
+      id: parseInt(exerciseId),
+      user_id: parseInt(userId),
     },
   });
 
-const deleteExercise = async (user_id, exercise_id) =>
+const deleteExercise = async (userId, exerciseId) =>
   await exercise.deleteMany({
     where: {
-      id: parseInt(exercise_id),
-      user_id: parseInt(user_id),
+      id: parseInt(exerciseId),
+      user_id: parseInt(userId),
     },
   });
 
-const editExerciseById = async (exercise_id, description, date, duration) =>
+const editExerciseById = async (exerciseId, description, date, duration) =>
   await exercise.update({
     where: {
-      id: parseInt(exercise_id),
+      id: parseInt(exerciseId),
     },
     data: {
       description,

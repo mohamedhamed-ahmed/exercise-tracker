@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use('/api/users', userRouter);
 app.use('/api/exercises', exerciseRouter);
-app.use('/api/users/:user_id/exercises', exerciseRouter);
+app.use('/api/users/:userId/exercises', exerciseRouter);
 
 app.use(errorHandler);
 
