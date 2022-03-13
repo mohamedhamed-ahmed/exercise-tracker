@@ -17,7 +17,7 @@ const getUserExercises = async (user_id) =>
 const createExercise = async (user_id, description, date, duration) =>
   await exercise.create({
     data: {
-      user_id,
+        user_id:parseInt(user_id),
       description,
       date: new Date(date),
       duration,

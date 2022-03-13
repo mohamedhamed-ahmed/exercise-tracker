@@ -3,13 +3,10 @@ import { app } from '../../app';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-afterEach(async () => {
-  await prisma.user.deleteMany();
-});
-
-afterAll(async () => await prisma.$disconnect());
-
 describe('User Endpoints', () => {
+  afterEach(async () => await prisma.user.deleteMany());
+  afterAll(async () => await prisma.$disconnect());
+
   describe('POST Endpoint', () => {
     it('should create a new user', async () => {
       const res = await request(app).post('/api/users').send({
@@ -47,16 +44,16 @@ describe('User Endpoints', () => {
     });
   });
 
-  describe.only('GET Endpoint', () => {
-    const users = [];
+  describe('GET Endpoint', () => {
+    let users = [];
     beforeEach(async () => {
-      const user1 = await request(app).post('/api/users').send({
+      const res1 = await request(app).post('/api/users').send({
         name: 'test1',
       });
-      const user2 = await request(app).post('/api/users').send({
+      const res2 = await request(app).post('/api/users').send({
         name: 'test2',
       });
-      users.push(user1, user2);
+      users=[res1.body, res2.body];
     });
 
     it('should return all users', async () => {
@@ -65,9 +62,13 @@ describe('User Endpoints', () => {
       expect(res.body.length).toEqual(2);
     });
 
-    xit('should return a specific users', async () => {
+    it('should return a specific users', async () => {
       const res = await request(app).get(`/api/users/${users[0].id}`).send();
+
+      console.log(JSON.stringify(res));
+
       expect(res.statusCode).toEqual(200);
+      expect(res.body['name']).toEqual(users[0].name);
     });
   });
 });
