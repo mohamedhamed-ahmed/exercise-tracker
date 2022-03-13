@@ -68,7 +68,6 @@ describe('User Endpoints', () => {
     xit('should return a specific users', async () => {
       const res = await request(app).get(`/api/users/${users[0].id}`).send();
       expect(res.statusCode).toEqual(200);
-      expect(res.body.length).toEqual(2);
     });
   });
 });
