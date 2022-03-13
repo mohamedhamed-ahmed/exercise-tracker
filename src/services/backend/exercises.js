@@ -12,19 +12,19 @@ const deleteExercise = async (exerciseId, userId) => {
   return data;
 };
 
-const addExercise = async (userId, description, duration, date) => {
+const addExercise = async ({ userId, description, duration, date }) => {
   const url = `http://localhost:5222/api/users/${userId}/exercises`;
   const { data } = await httpService.post(url, { description, duration, date });
   return data;
 };
 
-const editExercise = async (
+const editExercise = async ({
   userId,
   exerciseId,
   description,
   duration,
-  date
-) => {
+  date,
+}) => {
   const url = `http://localhost:5222/api/users/${userId}/exercises/${exerciseId}`;
   const { data } = await httpService.put(url, { description, duration, date });
   return data;

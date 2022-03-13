@@ -4,7 +4,7 @@ import { Box, Tabs as MUITabs, Tab } from '@mui/material';
 import TabPanel from './TabPanel/TabPanel';
 
 const Tabs = ({ tabsConfigurations }) => {
-  const {tabNames, tabsComponents} = tabsConfigurations;
+  const { tabNames, tabsComponents } = tabsConfigurations;
 
   const [value, setValue] = useState(0);
 
@@ -14,11 +14,7 @@ const Tabs = ({ tabsConfigurations }) => {
   return (
     <div>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <MUITabs
-          value={value}
-          onChange={handleChange}
-          aria-label='basic tabs example'
-        >
+        <MUITabs value={value} onChange={handleChange}>
           {tabNames.map((name, index) => (
             <Tab label={name} key={index} id={index} />
           ))}
